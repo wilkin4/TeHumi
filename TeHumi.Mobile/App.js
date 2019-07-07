@@ -1,28 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Fragment, Component } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
 } from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 import socketIOClient from 'socket.io-client';
 
@@ -50,10 +31,73 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <View>
-          <Text>Client</Text>
-          <Text>Temperature: {this.state.response.temperature}</Text>
-          <Text>Humidity: {this.state.response.humidity}</Text>
+        <View
+          style={{ 
+            flex: 1, 
+            backgroundColor: '#607D8B' 
+          }}
+        >
+          <View
+            style={{
+              flex: 2,
+              backgroundColor: '#37474F',
+              justifyContent: 'center'
+            }}
+          >
+            <Text
+              style={styles.titleText}
+            >
+              TeHumi
+            </Text>
+          </View>
+
+          <View
+            style={styles.titleContainer}
+          >
+            <Text
+              style={styles.titleText}
+            >
+              Temperature
+          </Text>
+          </View>
+
+          <View
+            style={styles.valueContainer}
+          >
+            <Text
+              style={styles.valueText}
+            >
+              {this.state.response.temperature}
+            </Text>
+          </View>
+
+          <View
+            style={styles.titleContainer}
+          >
+            <Text
+              style={styles.titleText}
+            >
+              Humidity
+          </Text>
+          </View>
+
+          <View style={styles.valueContainer}>
+            <Text
+              style={styles.valueText}
+            >
+              {this.state.response.humidity}
+            </Text>
+          </View>
+
+          <View
+            style={{ flex: 1 }}
+          >
+            <Text
+              style={styles.titleText}
+            >
+              
+            </Text>
+          </View>
         </View>
       </Fragment>
     );
@@ -61,30 +105,24 @@ class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  titleContainer: {
+    flex: 2,
+    justifyContent: 'center'
   },
-  body: {
-    backgroundColor: Colors.white,
+  titleText: {
+    fontSize: 40,
+    textAlign: 'center',
+    color: '#ffffff'
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  valueContainer: {
+    flex: 3,
+    justifyContent: 'center'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  valueText: {
+    fontSize: 80,
+    textAlign: 'center',
+    color: '#ffffff'
+  }
 });
 
 export default App;
