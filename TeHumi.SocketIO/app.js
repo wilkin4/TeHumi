@@ -2,8 +2,9 @@ import express from 'express';
 import http from 'http';
 import socketIO from 'socket.io';
 import bodyParser from 'body-parser';
-import { API_TEMPERATURES_URL, API_HUMIDITIES_URL } from './configurations';
+import Repository from './repository';
 import fetch from 'node-fetch';
+import { API_TEMPERATURES_URL, API_HUMIDITIES_URL } from './configurations';
 
 const app = express();
 const router = express.Router();
@@ -14,6 +15,7 @@ app.use(router);
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = socketIO(server);
+const repository = new Repository();
 
 io.on('connection', socket => {
   console.log('Client connected.');
@@ -27,37 +29,12 @@ io.on('connection', socket => {
     humidity: 0
   }
 
-  // Get las temperature 
-  fetch(`${API_TEMPERATURES_URL}/last`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      //console.log(`Tehumi API temperatures: ${result}`);
+  Promise.all([repository.getLastTemperature(), repository.getLastHumidity()]).then(result => {
+    values.temperature = result[0];
+    values.humidity = result[1];
 
-      values.temperature = data.result.value;
-
-      // Get last humidity
-      fetch(`${API_HUMIDITIES_URL}/last`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log(`Tehumi API humidities: ${result}`);
-
-          values.humidity = data.result.value;
-
-          socket.emit('FromAPI', values);
-        })
-        .catch(error => console.log(`TeHumi API humidities: ${error}`));
-    })
-    .catch(error => console.log(`TeHumi API temperatures: ${error}`));
+    socket.emit('FromAPI', values);
+  });
 });
 
 server.listen(PORT, () => {
