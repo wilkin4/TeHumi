@@ -31,7 +31,10 @@ class App extends Component {
     super();
 
     this.state = {
-      response: false,
+      response: {
+        temperature: 0,
+        humidity: 0
+      },
       endPoint: 'http://192.168.1.181:3000'
     }
   }
@@ -49,7 +52,8 @@ class App extends Component {
       <Fragment>
         <View>
           <Text>Client</Text>
-          <Text>{this.state.response}</Text>
+          <Text>Temperature: {this.state.response.temperature}</Text>
+          <Text>Humidity: {this.state.response.humidity}</Text>
         </View>
       </Fragment>
     );
