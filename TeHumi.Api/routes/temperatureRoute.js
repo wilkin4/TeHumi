@@ -36,7 +36,6 @@ router.get('/:id', (request, response) => {
 // POST
 // ==========
 router.post('/', (request, response) => {
-  console.log(request.body);
   temperatureRepository.create(request.body, result => {
     ResponseResult(result, response);
   });

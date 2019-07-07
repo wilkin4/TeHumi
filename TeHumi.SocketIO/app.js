@@ -21,6 +21,43 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log('Client disconnected.');
   });
+
+  let values = {
+    temperature: 0,
+    humidity: 0
+  }
+
+  // Get las temperature 
+  fetch(`${API_TEMPERATURES_URL}/last`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      //console.log(`Tehumi API temperatures: ${result}`);
+
+      values.temperature = data.result.value;
+
+      // Get last humidity
+      fetch(`${API_HUMIDITIES_URL}/last`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          //console.log(`Tehumi API humidities: ${result}`);
+
+          values.humidity = data.result.value;
+
+          socket.emit('FromAPI', values);
+        })
+        .catch(error => console.log(`TeHumi API humidities: ${error}`));
+    })
+    .catch(error => console.log(`TeHumi API temperatures: ${error}`));
 });
 
 server.listen(PORT, () => {
