@@ -40,10 +40,48 @@ class Repository {
     return promise;
   }
 
-  saveTemperatureAndHumidity() {
-    
+  saveTemperatureAndHumidity(values) {
+    const temperaturePromise = new Promise((resolve, reject) => {
+      fetch(API_TEMPERATURES_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          value: values.temperature
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.text())
+        .then(result => {
+          console.log(`Tehumi API temperatures: ${result}`);
+
+          resolve();
+        })
+        .catch(error => console.log(`TeHumi API temperatures: ${error}`));
+    });
+
+    const humidityPromise = new Promise((resolve, reject) => {
+      fetch(API_HUMIDITIES_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          value: values.humidity
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.text())
+        .then(result => {
+          console.log(`Tehumi API humidities: ${result}`);
+
+          resolve();
+        })
+        .catch(error => console.log(`TeHumi API humidities: ${error}`));
+    });
+
+    return Promise.all([temperaturePromise, humidityPromise]);
   }
-  
+
 }
 
 export default Repository;

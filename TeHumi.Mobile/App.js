@@ -37,7 +37,7 @@ class App extends Component {
             backgroundColor: '#607D8B' 
           }}
         >
-          <View
+          {/* <View
             style={{
               flex: 2,
               backgroundColor: '#37474F',
@@ -49,20 +49,20 @@ class App extends Component {
             >
               TeHumi
             </Text>
-          </View>
+          </View> */}
 
           <View
-            style={styles.titleContainer}
+            style={{...styles.titleContainer, backgroundColor: '#37474F',}}
           >
             <Text
               style={styles.titleText}
             >
-              Temperature
+              Temperatura
           </Text>
           </View>
 
           <View
-            style={styles.valueContainer}
+            style={{...styles.valueContainer, backgroundColor: '#37474F',}}
           >
             <Text
               style={styles.valueText}
@@ -77,7 +77,7 @@ class App extends Component {
             <Text
               style={styles.titleText}
             >
-              Humidity
+              Humedad
           </Text>
           </View>
 
@@ -89,7 +89,7 @@ class App extends Component {
             </Text>
           </View>
 
-          <View
+          {/* <View
             style={{ flex: 1 }}
           >
             <Text
@@ -97,7 +97,7 @@ class App extends Component {
             >
               
             </Text>
-          </View>
+          </View> */}
         </View>
       </Fragment>
     );
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   valueContainer: {
-    flex: 3,
+    flex: 4,
     justifyContent: 'center'
   },
   valueText: {
