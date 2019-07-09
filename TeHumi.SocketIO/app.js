@@ -34,6 +34,10 @@ server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
+router.get('/', (request, response) => {
+  response.send('<h3>Server socket is running.</h3>');
+});
+
 router.post('/', (request, response) => {
   const values = {
     temperature: request.body.temperature,
