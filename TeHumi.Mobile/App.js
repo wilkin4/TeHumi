@@ -16,8 +16,10 @@ class App extends Component {
         temperature: 0,
         humidity: 0
       },
-      endPoint: 'http://192.168.1.181:3000'
+      endPoint: 'https://tehumi-socket-io.herokuapp.com'
     }
+
+    console.disableYellowBox = true;
   }
 
   componentDidMount() {
@@ -67,7 +69,7 @@ class App extends Component {
             <Text
               style={styles.valueText}
             >
-              {this.state.response.temperature}
+              {this.state.response.temperature}°C
             </Text>
           </View>
 
@@ -85,7 +87,7 @@ class App extends Component {
             <Text
               style={styles.valueText}
             >
-              {this.state.response.humidity}
+              {this.state.response.humidity}%
             </Text>
           </View>
 
