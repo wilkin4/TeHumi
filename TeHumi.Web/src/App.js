@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SocketIOClient from 'socket.io-client';
 import './App.css';
+import { runInThisContext } from 'vm';
 
 class App extends Component {
   constructor() {
@@ -11,22 +12,71 @@ class App extends Component {
         temperature: 0,
         humidity: 0
       },
-      endPoint: 'https://tehumi-socket-io.herokuapp.com'
+      endPoint: 'https://tehumi-socket-io.herokuapp.com',
+      temperatureColor: '',
+      humidityColor: ''
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const endPoint = this.state.endPoint;
     const socket = SocketIOClient(endPoint);
 
     socket.on('FromAPI', data => {
+      this.setTemperatureColor(data.temperature);
+      this.setHumidityColor(data.humidity);
+
+      console.log(data);
+
       this.setState({
         response: data
       });
     });
   }
 
-  render() {
+  setTemperatureColor = (value) => {
+    let color = '';
+
+    if (value < 20) {
+      color = '#ffffff';
+    }
+    else if (value < 40) {
+      color = '#FFEC33'
+    }
+    else if (value < 80) {
+      color = '#FF8A33'
+    }
+    else {
+      color = '#FC0000';
+    }
+
+    this.setState({
+      temperatureColor: color
+    });
+  }
+
+  setHumidityColor = (value) => {
+    let color = '';
+
+    if (value < 20) {
+      color = '#ffffff';
+    }
+    else if (value < 40) {
+      color = '#D4F1FF';
+    }
+    else if (value < 80) {
+      color = '#73D1FF';
+    }
+    else {
+      color = '#08AEFF';
+    }
+
+    this.setState({
+      humidityColor: color
+    });
+  }
+
+  render = () => {
     return (
       <React.Fragment>
         <div id="main-container" >
@@ -35,8 +85,8 @@ class App extends Component {
               Temperatura
             </div>
 
-            <div className="section-value" >
-              { this.state.response.temperature } °C
+            <div className="section-value" style={{ color: this.state.temperatureColor }} >
+              {this.state.response.temperature} °C
             </div>
           </div>
 
@@ -45,8 +95,8 @@ class App extends Component {
               Humedad
             </div>
 
-            <div className="section-value" >
-              { this.state.response.humidity } %
+            <div className="section-value" style={{ color: this.state.humidityColor }} >
+              {this.state.response.humidity} %
             </div>
           </div>
         </div>
