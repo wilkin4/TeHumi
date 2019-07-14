@@ -26,8 +26,6 @@ class App extends Component {
       this.setTemperatureColor(data.temperature);
       this.setHumidityColor(data.humidity);
 
-      console.log(data);
-
       this.setState({
         response: data
       });
@@ -86,7 +84,7 @@ class App extends Component {
             </div>
 
             <div className="section-value" style={{ color: this.state.temperatureColor }} >
-              {this.state.response.temperature} °C
+              { this.state.response.temperature.toFixed(2) } °C
             </div>
           </div>
 
@@ -96,7 +94,7 @@ class App extends Component {
             </div>
 
             <div className="section-value" style={{ color: this.state.humidityColor }} >
-              {this.state.response.humidity} %
+              { this.state.response.humidity.toFixed(2) } %
             </div>
           </div>
         </div>
