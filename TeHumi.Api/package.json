@@ -7,16 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js --exec babel-node"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wilkin4/temperature-humidity-server.git"
-  },
   "author": "Wilkin Vásquez",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/wilkin4/temperature-humidity-server/issues"
-  },
-  "homepage": "https://github.com/wilkin4/temperature-humidity-server#readme",
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",

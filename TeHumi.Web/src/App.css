@@ -1,0 +1,32 @@
+#main-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: red;
+}
+
+#temperature-container {
+  background-color: #151B1E;
+}
+
+#humidity-container {
+  background-color: #242F34;
+}
+
+.section-container {
+  color: #ffffff;
+  text-align: center;
+  height: 50%;
+}
+
+.section-title {
+  font-size: 40pt;
+  padding-top: 50px;
+}
+
+.section-value {
+  font-size: 80pt;
+  padding-top: 50px;
+}
