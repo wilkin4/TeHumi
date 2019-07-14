@@ -16,27 +16,77 @@ class App extends Component {
         temperature: 0,
         humidity: 0
       },
-      endPoint: 'https://tehumi-socket-io.herokuapp.com'
+      temperatureColor: '#ffffff',
+      humidityColor: '#ffffff',
+      endPoint: 'https://tehumi-socket-io.herokuapp.com',
     }
 
     console.disableYellowBox = true;
   }
 
-  componentDidMount() {
-    const { endPoint } = this.state;
+  componentDidMount = () => {
+    const endPoint = this.state.endPoint;
     const socket = socketIOClient(endPoint);
+
     socket.on('FromAPI', data => {
-      this.setState({ response: data });
+      this.setTemperatureColor(data.temperature);
+      this.setHumidityColor(data.humidity);
+
+      this.setState({
+        response: data
+      });
     });
   }
 
-  render() {
+  setTemperatureColor = (value) => {
+    let color = '';
+
+    if (value < 20) {
+      color = '#ffffff';
+    }
+    else if (value < 40) {
+      color = '#FFEC33'
+    }
+    else if (value < 80) {
+      color = '#FF8A33'
+    }
+    else {
+      color = '#FC0000';
+    }
+
+    this.setState({
+      temperatureColor: color
+    });
+  }
+
+  setHumidityColor = (value) => {
+    let color = '';
+
+    if (value < 20) {
+      color = '#ffffff';
+    }
+    else if (value < 40) {
+      color = '#D4F1FF';
+    }
+    else if (value < 80) {
+      color = '#73D1FF';
+    }
+    else {
+      color = '#08AEFF';
+    }
+
+    this.setState({
+      humidityColor: color
+    });
+  }
+
+  render = () => {
     return (
       <Fragment>
         <View
           style={{ 
             flex: 1, 
-            backgroundColor: '#607D8B' 
+            backgroundColor: '#242F34' 
           }}
         >
           {/* <View
@@ -54,7 +104,7 @@ class App extends Component {
           </View> */}
 
           <View
-            style={{...styles.titleContainer, backgroundColor: '#37474F',}}
+            style={{...styles.titleContainer, backgroundColor: '#151B1E',}}
           >
             <Text
               style={styles.titleText}
@@ -64,10 +114,10 @@ class App extends Component {
           </View>
 
           <View
-            style={{...styles.valueContainer, backgroundColor: '#37474F',}}
+            style={{...styles.valueContainer, backgroundColor: '#151B1E',}}
           >
             <Text
-              style={styles.valueText}
+              style={{...styles.valueText, color: this.state.temperatureColor}}
             >
               {this.state.response.temperature}°C
             </Text>
@@ -85,7 +135,7 @@ class App extends Component {
 
           <View style={styles.valueContainer}>
             <Text
-              style={styles.valueText}
+              style={{...styles.valueText, color: this.state.humidityColor}}
             >
               {this.state.response.humidity}%
             </Text>
@@ -122,8 +172,7 @@ const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 80,
-    textAlign: 'center',
-    color: '#ffffff'
+    textAlign: 'center'
   }
 });
 

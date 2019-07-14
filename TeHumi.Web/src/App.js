@@ -12,9 +12,9 @@ class App extends Component {
         temperature: 0,
         humidity: 0
       },
-      endPoint: 'https://tehumi-socket-io.herokuapp.com',
       temperatureColor: '',
-      humidityColor: ''
+      humidityColor: '',
+      endPoint: 'https://tehumi-socket-io.herokuapp.com'
     }
   }
 
