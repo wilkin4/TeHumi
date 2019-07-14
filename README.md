@@ -1,3 +1,3 @@
 # TeHumi
 
-## Temperature and humidity project with NodeJS, Python and Raspberry Pi
+## Temperature and humidity project with React, React Native, NodeJS, Python and Raspberry Pi

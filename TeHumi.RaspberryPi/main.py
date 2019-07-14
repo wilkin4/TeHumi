@@ -7,8 +7,8 @@ while True:
   humidity = random.random() * 100
 
   values = {
-      "temperature": f'{temperature:1.2f}',
-      "humidity": f'{humidity:1.2f}'
+      "temperature": temperature,
+      "humidity": humidity
   }
 
   url = "https://tehumi-socket-io.herokuapp.com"
