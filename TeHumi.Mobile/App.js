@@ -137,7 +137,7 @@ class App extends Component {
             <Text
               style={{...styles.valueText, color: this.state.humidityColor}}
             >
-              { this.state.response.temperature.toFixed(2) }%
+              { this.state.response.humidity.toFixed(2) }%
             </Text>
           </View>
 
