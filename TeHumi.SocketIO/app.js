@@ -41,7 +41,8 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const values = {
     temperature: request.body.temperature,
-    humidity: request.body.humidity
+    humidity: request.body.humidity,
+    isMotion: false
   }
 
   repository.saveTemperatureAndHumidity(values).then(() => {
@@ -52,4 +53,17 @@ router.post('/', (request, response) => {
     });
   });
 });
+
+router.post('/motions', (request, response) => {
+    const values = {
+        motion: request.body.motion,
+        isMotion: true
+    }
+
+    io.emit('FromAPI', values)
+
+    response.status(200).send({
+        status: true
+    });
+})
 

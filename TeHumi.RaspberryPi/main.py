@@ -11,7 +11,7 @@ while True:
       "humidity": humidity
   }
 
-  url = "https://tehumi-socket-io.herokuapp.com"
+  url = "http://localhost:3000"
   contentType = "Content-Type: application/json"
   body = json.dumps(values)
 

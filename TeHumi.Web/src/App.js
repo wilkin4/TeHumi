@@ -4,103 +4,138 @@ import './App.css';
 import { runInThisContext } from 'vm';
 
 class App extends Component {
-  constructor() {
-    super();
+    constructor() {
+        super();
 
-    this.state = {
-      response: {
-        temperature: 0,
-        humidity: 0
-      },
-      temperatureColor: '',
-      humidityColor: '',
-      endPoint: 'https://tehumi-socket-io.herokuapp.com'
-    }
-  }
-
-  componentDidMount = () => {
-    const endPoint = this.state.endPoint;
-    const socket = SocketIOClient(endPoint);
-
-    socket.on('FromAPI', data => {
-      this.setTemperatureColor(data.temperature);
-      this.setHumidityColor(data.humidity);
-
-      this.setState({
-        response: data
-      });
-    });
-  }
-
-  setTemperatureColor = (value) => {
-    let color = '';
-
-    if (value < 20) {
-      color = '#ffffff';
-    }
-    else if (value < 40) {
-      color = '#FFEC33'
-    }
-    else if (value < 80) {
-      color = '#FF8A33'
-    }
-    else {
-      color = '#FC0000';
+        this.state = {
+            temperature: 0,
+            humidity: 0,
+            motion: false,
+            temperatureColor: '',
+            humidityColor: '',
+            motionColor: '',
+            endPoint: 'http://localhost:3000'
+        }
     }
 
-    this.setState({
-      temperatureColor: color
-    });
-  }
+    componentDidMount = () => {
+        const endPoint = this.state.endPoint;
+        const socket = SocketIOClient(endPoint);
 
-  setHumidityColor = (value) => {
-    let color = '';
+        socket.on('FromAPI', data => {
+            if (data.isMotion) {
+                this.setMotionColor(data.motion);
 
-    if (value < 20) {
-      color = '#ffffff';
+                this.setState({
+                    motion: data.motion
+                });
+            }
+            else {
+                this.setTemperatureColor(data.temperature);
+                this.setHumidityColor(data.humidity);
+
+                this.setState({
+                    temperature: data.temperature,
+                    humidity: data.humidity
+                });
+            }
+        });
     }
-    else if (value < 40) {
-      color = '#D4F1FF';
+
+    setTemperatureColor = (value) => {
+        let color = '';
+
+        if (value < 20) {
+            color = '#ffffff';
+        }
+        else if (value < 40) {
+            color = '#FFEC33'
+        }
+        else if (value < 80) {
+            color = '#FF8A33'
+        }
+        else {
+            color = '#FC0000';
+        }
+
+        this.setState({
+            temperatureColor: color
+        });
     }
-    else if (value < 80) {
-      color = '#73D1FF';
+
+    setHumidityColor = (value) => {
+        let color = '';
+
+        if (value < 20) {
+            color = '#ffffff';
+        }
+        else if (value < 40) {
+            color = '#D4F1FF';
+        }
+        else if (value < 80) {
+            color = '#73D1FF';
+        }
+        else {
+            color = '#08AEFF';
+        }
+
+        this.setState({
+            humidityColor: color
+        });
     }
-    else {
-      color = '#08AEFF';
+
+    setMotionColor = (value) => {
+        let color = '';
+
+        if (value) {
+            color = '#1ac937'
+        }
+        else {
+            color = '#ffffff'
+        }
+
+        this.setState({
+            motionColor: color
+        });
     }
 
-    this.setState({
-      humidityColor: color
-    });
-  }
+    render = () => {
+        return (
+            <React.Fragment>
+                <div id="main-container" >
+                    <div id="temperature-container" className="section-container" >
+                        <div className="section-title" >
+                            Temperatura
+                        </div>
 
-  render = () => {
-    return (
-      <React.Fragment>
-        <div id="main-container" >
-          <div id="temperature-container" className='section-container' >
-            <div className="section-title" >
-              Temperatura
-            </div>
+                        <div className="section-value" style={{ color: this.state.temperatureColor }} >
+                            {this.state.temperature.toFixed(2)} °C
+                    </div>
+                    </div>
 
-            <div className="section-value" style={{ color: this.state.temperatureColor }} >
-              { this.state.response.temperature.toFixed(2) } °C
-            </div>
-          </div>
+                    <div id="humidity-container" className="section-container" >
+                        <div className="section-title">
+                            Humedad
+                        </div>
 
-          <div id="humidity-container" className='section-container' >
-            <div className="section-title">
-              Humedad
-            </div>
+                        <div className="section-value" style={{ color: this.state.humidityColor }} >
+                            {this.state.humidity.toFixed(2)} %
+                        </div>
+                    </div>
 
-            <div className="section-value" style={{ color: this.state.humidityColor }} >
-              { this.state.response.humidity.toFixed(2) } %
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  }
+                    <div id="motion-container" className="section-container" >
+                        <div className="section-title">
+                            Movimiento
+                        </div>
+
+                        <div className="section-value" style={{ color: this.state.motionColor }} >
+                            {this.state.motion ? 'Sí' : 'No'}
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
+        )
+    }
 }
 
 export default App;
