@@ -18,7 +18,7 @@ class App extends Component {
             temperatureColor: '#ffffff',
             humidityColor: '#ffffff',
             motionColor: '#ffffff',
-            endPoint: 'http://192.168.1.181:3000'
+            endPoint: 'https://tehumi-socket-io.herokuapp.com'
         }
 
         console.disableYellowBox = true;
