@@ -7,29 +7,47 @@
 }
 
 #temperature-container {
+  width: 50%;
   background-color: #151B1E;
+  height: 33.33%;
 }
 
 #humidity-container {
+  width: 50%;
   background-color: #242F34;
+  height: 33.33%;
 }
 
 #motion-container {
-  background-color: #34434a;    
+  width: 50%;
+  background-color: #242F34;  
+  height: 33.33%;  
+}
+
+#distance-container {
+  width: 50%;
+  background-color: #151B1E;   
+  height: 33.33%; 
+}
+
+#velocity-container {
+  width: 100%;
+  background-color: #405058;    
+  height: 33.33%;
 }
 
 .section-container {
   color: #ffffff;
   text-align: center;
-  height: 33.33%;
+  float: left;
 }
 
 .section-title {
-  font-size: 40pt;
-  padding-top: 40px;
+  font-size: 20pt;
+  padding-top: 110px;
 }
 
 .section-value {
-  font-size: 50pt;
-  padding-top: 50px;
+  font-size: 30pt;
+  padding-top: 30px;
 }

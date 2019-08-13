@@ -11,6 +11,8 @@ class App extends Component {
             temperature: 0,
             humidity: 0,
             motion: false,
+            distance: 0,
+            velocity: 0,
             temperatureColor: '',
             humidityColor: '',
             motionColor: '',
@@ -28,6 +30,12 @@ class App extends Component {
 
                 this.setState({
                     motion: data.motion
+                });
+            }
+            else if (data.isVelocity) {
+                this.setState({
+                    distance: data.distance,
+                    velocity: data.velocity
                 });
             }
             else {
@@ -130,6 +138,26 @@ class App extends Component {
 
                         <div className="section-value" style={{ color: this.state.motionColor }} >
                             {this.state.motion ? 'Sí' : 'No'}
+                        </div>
+                    </div>
+
+                    <div id="distance-container" className="section-container" >
+                        <div className="section-title">
+                            Distancia
+                        </div>
+
+                        <div className="section-value" style={{ color: this.state.motionColor }} >
+                            {this.state.distance.toFixed(2)} cm
+                        </div>
+                    </div>
+
+                    <div id="velocity-container" className="section-container" >
+                        <div className="section-title">
+                            Velocidad
+                        </div>
+
+                        <div className="section-value" style={{ color: this.state.motionColor }} >
+                            {this.state.velocity.toFixed(2)} cm/s
                         </div>
                     </div>
                 </div>
