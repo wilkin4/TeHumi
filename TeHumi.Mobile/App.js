@@ -15,10 +15,12 @@ class App extends Component {
             temperature: 0,
             humidity: 0,
             motion: false,
+            distance: 0,
+            velocity: 0,
             temperatureColor: '#ffffff',
             humidityColor: '#ffffff',
             motionColor: '#ffffff',
-            endPoint: 'https://tehumi-socket-io.herokuapp.com'
+            endPoint: 'http://localhost:3000/'
         }
 
         console.disableYellowBox = true;
@@ -34,6 +36,12 @@ class App extends Component {
 
                 this.setState({
                     motion: data.motion
+                });
+            }
+            else if (data.isVelocity) {
+                this.setState({
+                    distance: data.distance,
+                    velocity: data.velocity
                 });
             }
             else {
@@ -110,24 +118,17 @@ class App extends Component {
             <Fragment>
                 <View
                     style={{
-                        flex: 1
+                        flex: 1,
+                        flexDirection: 'row'
                     }}
                 >
-                    {/* <View
-                            style={{
-                            flex: 2,
-                            backgroundColor: '#37474F',
-                            justifyContent: 'center'
-                        }}
-                        >
-                        <Text
-                            style={styles.titleText}
-                        >
-                            TeHumi
-                        </Text>
-                    </View> */}
-
-                    <View style={{ backgroundColor: '#151B1E', flex: 1 }}>
+                    <View style={{
+                        backgroundColor: '#151B1E',
+                        width: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    >
                         <View
                             style={{ ...styles.titleContainer }}
                         >
@@ -149,7 +150,13 @@ class App extends Component {
                         </View>
                     </View>
 
-                    <View style={{ backgroundColor: '#242F34', flex: 1 }}>
+                    <View style={{
+                        backgroundColor: '#242F34',
+                        width: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    >
                         <View
                             style={styles.titleContainer}
                         >
@@ -168,8 +175,22 @@ class App extends Component {
                             </Text>
                         </View>
                     </View>
+                </View>
 
-                    <View style={{ backgroundColor: '#34434a', flex: 1 }}>
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignContent: 'center'
+                    }}
+                >
+                    <View style={{
+                        backgroundColor: '#242F34',
+                        width: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    >
                         <View
                             style={styles.titleContainer}
                         >
@@ -182,22 +203,66 @@ class App extends Component {
 
                         <View style={styles.valueContainer}>
                             <Text
-                                style={{ ...styles.valueText, color: this.state.motionColor}}
+                                style={{ ...styles.valueText, color: this.state.motionColor }}
                             >
                                 {this.state.motion ? 'Sí' : 'No'}
                             </Text>
                         </View>
                     </View>
 
-                    {/* <View
-                        style={{ flex: 1 }}
+                    <View
+                        style={{
+                            backgroundColor: '#151B1E',
+                            width: '50%',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <View
+                            style={styles.titleContainer}
+                        >
+                            <Text
+                                style={styles.titleText}
+                            >
+                                Distancia
+                            </Text>
+                        </View>
+
+                        <View style={styles.valueContainer}>
+                            <Text
+                                style={{ ...styles.valueText, color: this.state.motionColor }}
+                            >
+                                {this.state.distance.toFixed(2)} cm
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+
+                <View
+                    style={{
+                        backgroundColor: '#405059',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 1
+                    }}
+                >
+                    <View
+                        style={styles.titleContainer}
                     >
                         <Text
-                        style={styles.titleText}
+                            style={styles.titleText}
                         >
-                        
-                        </Text>
-                    </View> */}
+                            Velocidad
+                            </Text>
+                    </View>
+
+                    <View style={styles.valueContainer}>
+                        <Text
+                            style={{ ...styles.valueText, color: this.state.motionColor }}
+                        >
+                            {this.state.velocity.toFixed(2)} cm/s
+                            </Text>
+                    </View>
                 </View>
             </Fragment>
         );
@@ -206,20 +271,18 @@ class App extends Component {
 
 const styles = StyleSheet.create({
     titleContainer: {
-        flex: 2,
         justifyContent: 'center'
     },
     titleText: {
-        fontSize: 30,
+        fontSize: 20,
         textAlign: 'center',
         color: '#ffffff'
     },
     valueContainer: {
-        flex: 4,
         justifyContent: 'center'
     },
     valueText: {
-        fontSize: 70,
+        fontSize: 35,
         textAlign: 'center'
     }
 });
